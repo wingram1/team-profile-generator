@@ -13,7 +13,6 @@ function App() {
 App.prototype.initializeApp = async function() {
     await this.promptQuestions()
         .then((createdEmployee) => {
-            console.log(createdEmployee)
             this.employeeList.push(createdEmployee);
             console.log("Current team profile: ")
             console.table(this.employeeList);
@@ -44,6 +43,7 @@ App.prototype.promptQuestions = async function() {
         } else {
         // assign role and continue prompts
         newEmployee.role = promptData.roleSelect
+        console.log("newEmployee.role: " + newEmployee.role);
         }
     })
     await newEmployee.getName()
@@ -68,8 +68,7 @@ App.prototype.promptQuestions = async function() {
 
     switch (newEmployee.role) {
         case 'Manager': 
-            var newManager = new Manager(newEmployee.name, newEmployee.id, newEmployee.email, newEmployee.role);
-            console.log(newManager);
+            var newManager = new Manager(newEmployee.name, newEmployee.id, newEmployee.email, "Manager");
             await newManager.getOfficeNum()
                 .then((promptData) => {
                     newManager.officeNum = promptData.officeNumInput;
@@ -77,10 +76,22 @@ App.prototype.promptQuestions = async function() {
                 console.log("Employee card for " + newManager.name + " created!");
                 return newManager;
         case 'Intern':
-            // var newIntern = new Intern(newEmployee.name, newEmployee.id, newEmployee.email, newEmployee.role)
+            var newIntern = new Intern(newEmployee.name, newEmployee.id, newEmployee.email, "Intern")
+            await newIntern.getSchool()
+            .then((promptData) => {
+                newIntern.school = promptData.schoolInput;
+            })
+            console.log("Employee card for " + newIntern.name + " created!");
+            return newIntern;
         case 'Engineer':
-            // var newEngineer = new Engineer(newEmployee.name, newEmployee.id, newEmployee.email, newEmployee.role)
-        default: 'Oops! Something went wrong in the switch statement on line 74'
+            var newEngineer = new Engineer(newEmployee.name, newEmployee.id, newEmployee.email, "Engineer");
+            await newEngineer.getGithub()
+            .then((promptData) => {
+                newEngineer.github = promptData.githubInput;
+            })
+            console.log("Employee card for " + newEngineer.name + " created!");
+            return newEngineer;
+        default: 'Oops! Something went wrong.'
     }
 }
 
@@ -90,6 +101,7 @@ App.prototype.promptQuestions = async function() {
 /////////// INITIALIZE APP ///////////
 console.log(`
 ====== Welcome to your Team Profile Generator! ======
-Answer the prompts to create a profile for your team.`
+Answer the prompts to create a profile for your team.
+`
     )
 new App().initializeApp()
