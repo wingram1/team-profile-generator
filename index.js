@@ -2,7 +2,8 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const Employee = require('./lib/Employee');
 const Manager = require('./lib/Manager');
-// not sure if I need the rest
+const Intern = require('./lib/Intern');
+const Engineer = require('./lib/Engineer');
 
 // Set up employee list array
 function App() {
@@ -10,13 +11,10 @@ function App() {
 }
 
 App.prototype.initializeApp = async function() {
-    console.log(`
-====== Welcome to your Team Profile Generator! ======
-Answer the prompts to create a profile for your team.`
-    )
     await this.promptQuestions()
-        .then((newEmployee) => {
-            this.employeeList.push(newEmployee);
+        .then((createdEmployee) => {
+            console.log(createdEmployee)
+            this.employeeList.push(createdEmployee);
             console.log("Current team profile: ")
             console.table(this.employeeList);
             return inquirer.prompt({
@@ -27,15 +25,11 @@ Answer the prompts to create a profile for your team.`
         })
         .then(({ addConfirm }) => {
             if (addConfirm) {
-                this.promptQuestions()
+                this.initializeApp()
             } else {
-                console.log("You've finished making your employees. Goodbye! :D")
+                console.log("You've finished making your employees. Goodbye!")
             }
         })
-
-
-
-    // Push working employee
 }
 
 App.prototype.promptQuestions = async function() {
@@ -69,18 +63,19 @@ App.prototype.promptQuestions = async function() {
     // if no role selected,
     if (newEmployee.role === 'Employee') {
         console.log("Employee card for " + newEmployee.name + " created!")
-        return newEmployee
+        return newEmployee;
     }
 
     switch (newEmployee.role) {
         case 'Manager': 
             var newManager = new Manager(newEmployee.name, newEmployee.id, newEmployee.email, newEmployee.role);
+            console.log(newManager);
             await newManager.getOfficeNum()
                 .then((promptData) => {
-                    newManager.officeNum = promptData.officeNum;
-                    console.log(newManager);
-                    return newManager;
+                    newManager.officeNum = promptData.officeNumInput;
                 })
+                console.log("Employee card for " + newManager.name + " created!");
+                return newManager;
         case 'Intern':
             // var newIntern = new Intern(newEmployee.name, newEmployee.id, newEmployee.email, newEmployee.role)
         case 'Engineer':
@@ -93,4 +88,8 @@ App.prototype.promptQuestions = async function() {
 
 
 /////////// INITIALIZE APP ///////////
+console.log(`
+====== Welcome to your Team Profile Generator! ======
+Answer the prompts to create a profile for your team.`
+    )
 new App().initializeApp()
