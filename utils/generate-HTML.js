@@ -6,34 +6,37 @@ function generateCards(teamList) {
     for(i = 0; i < teamList.length; i++) {
         // if more than three cards, start a new row
         if (newRowCounter === 3) {
-             cardsHTML += `
+            newRowCounter = 0;
+            cardsHTML += `
     </div>
-    <div class="container d-flex justify-content-center align-center">`
+    <div class="container my-2 d-flex justify-content-center align-center">`
         }
 
         cardsHTML += `
-        <div class="card mx-4">
-            <div class="card-header h-50 bg-primary text-light d-flex flex-column">
-                <h3>${teamList[i].name}</h2>
-                <h4>${teamList[i].role}</h3>
-            </div>
-            <div class="card-body d-flex flex-column bg-light justify-content-center align-center">
-                <div class="bg-white my-1 px-1 border">ID: ${teamList[i].id}</div>
-                <div class="bg-white my-1 px-1 border">Email: <a href="mailto: ${teamList[i].email}">${teamList[i].email}</a></div>`
+            <div class="card mx-4">
+                <div class="card-header h-50 bg-primary text-light d-flex flex-column">
+                    <h3>${teamList[i].name}</h2>
+                    <h4>${teamList[i].role}</h3>
+                </div>
+                <div class="card-body d-flex flex-column bg-light justify-content-center align-center">
+                    <div class="bg-white my-1 px-1 border">ID: ${teamList[i].id}</div>
+                    <div class="bg-white my-1 px-1 border">Email: <a href="mailto: ${teamList[i].email}">${teamList[i].email}</a></div>`
 
-        switch (cardsHTML[i].role) {
+        switch (teamList[i].role) {
             case 'Manager':
                 cardsHTML += `
-                <div class="bg-white my-1 px-1 border">Office Number: ${teamList[i].officeNum}</div>`;
+                    <div class="bg-white my-1 px-1 border">Office Number: ${teamList[i].officeNum}</div>`;
                 break;
             case 'Engineer':
                 cardsHTML += `
-                <div class="bg-white my-1 px-1 border">Github: <a href="${teamList[i].github}">${teamList[i].github}</a></div>`
+                    <div class="bg-white my-1 px-1 border">Github: <a href="${teamList[i].github}">${teamList[i].github}</a></div>`
                 break;
             case 'Intern':
                 cardsHTML += `
-                <div class="bg-white my-1 px-1 border">School: ${teamList[i].school}</div>`
+                    <div class="bg-white my-1 px-1 border">School: ${teamList[i].school}</div>`
                 break;
+            default:
+                console.log("Oops! switch statement issue");
         }
         
         // close card-body & card
@@ -42,7 +45,7 @@ function generateCards(teamList) {
     </div>`
 
         // increate newRowCounter and loop
-        newRowCounter += 1;
+        newRowCounter ++;
     } 
 
     // close card row before ending
@@ -67,7 +70,7 @@ module.exports = (teamData) => {
     <header class="w-100 h-50 bg-danger pt-2 pb-2 text-center text-light">
         <h1 class="">My Team</h1>
     </header>
-    <main class="container d-flex w-100 p-5 d-flex flex-row justify-content-center">
+    <main class="container d-flex w-100 p-5 d-flex flex-column justify-content-center">
         ${generateCards(teamData)}
     </main>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

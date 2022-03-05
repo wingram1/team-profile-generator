@@ -29,7 +29,14 @@ App.prototype.initializeApp = async function() {
                 await this.initializeApp()
             } else {
                 // Generates file
-                writeFile(generatePage(this.employeeList));
+                await writeFile(generatePage(this.employeeList))
+                    .then((response) => {
+                        console.log(response);
+                        console.log("File created! Check for 'index.html' in the dist/ folder.")
+                    })
+                    .catch((err) => {
+                        console.log(error);
+                    });
             }
         })
 }
