@@ -26,7 +26,9 @@ App.prototype.initializeApp = async function() {
             if (addConfirm) {
                 this.initializeApp()
             } else {
-                console.log("You've finished making your employees. Goodbye!")
+                console.log("Final team profile: " + this.employeeList);
+                // generate page
+
             }
         })
 }
@@ -94,6 +96,18 @@ App.prototype.promptQuestions = async function() {
         default: 'Oops! Something went wrong.'
     }
 }
+
+
+////////////// WRITE TO HTML ///////////////
+App.prototype.generateFile = async function() {
+    // Convert each array object to a temperate literal HTML card
+    // Plug into the template from src
+    // Write to file in dist/
+    // Copy css from src/, paste into dist/
+}
+
+
+
 
 
 
