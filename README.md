@@ -102,3 +102,13 @@ You are required to submit the following for review:
 - A walkthrough video demonstrating the functionality of the application and passing tests.
 - A sample HTML file generated using your application.
 - The URL of the GitHub repository. Give the repository a unique name and include a README describing the project.
+
+
+
+
+## VIDEO SCRIPT
+- Go to repository, git clone, go to folder, then clone there
+- npm init -y (initialize npm)
+- npm i fs inquirer jest
+- npm run test (ensure they all pass)
+- node 
