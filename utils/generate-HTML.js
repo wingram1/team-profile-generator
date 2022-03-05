@@ -35,8 +35,6 @@ function generateCards(teamList) {
                 cardsHTML += `
                     <div class="bg-white my-1 px-1 border">School: ${teamList[i].school}</div>`
                 break;
-            default:
-                console.log("Oops! switch statement issue");
         }
         
         // close card-body & card
