@@ -4,6 +4,8 @@ const Employee = require('./lib/Employee');
 const Manager = require('./lib/Manager');
 const Intern = require('./lib/Intern');
 const Engineer = require('./lib/Engineer');
+const generatePage = require('./utils/generate-HTML');
+const writeFile = require('./utils/write-file');
 
 // Set up employee list array
 function App() {
@@ -22,13 +24,12 @@ App.prototype.initializeApp = async function() {
                 name: 'addConfirm'
             })
         })
-        .then(({ addConfirm }) => {
+        .then(async ({ addConfirm }) => {
             if (addConfirm) {
-                this.initializeApp()
+                await this.initializeApp()
             } else {
-                console.log("Final team profile: " + this.employeeList);
-                // generate page
-
+                // Generates file
+                writeFile(generatePage(this.employeeList));
             }
         })
 }
@@ -97,20 +98,10 @@ App.prototype.promptQuestions = async function() {
     }
 }
 
-
-////////////// WRITE TO HTML ///////////////
-App.prototype.generateFile = async function() {
-    // Convert each array object to a temperate literal HTML card
-    // Plug into the template from src
-    // Write to file in dist/
-    // Copy css from src/, paste into dist/
-}
-
-
-
-
-
-
+// // Function to generate file
+// app.prototype.generateFile = function(teamList) {
+//     writeFile(generatePage(teamList));
+// }
 
 /////////// INITIALIZE APP ///////////
 console.log(`
@@ -118,4 +109,4 @@ console.log(`
 Answer the prompts to create a profile for your team.
 `
     )
-new App().initializeApp()
+new App().initializeApp();
