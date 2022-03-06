@@ -17,7 +17,7 @@ Welcome to my team profile generator! Using this application, you can easily org
   3. Initialize npm with `npm init -y` then install required packages with `npm install jest fs inquirer`     
   4. Type the command `node index.js` and answer the prompts!
 
-  - ![Instructional Video](./assets/demo-video.mp4)
+  - [Instructional Video](https://www.youtube.com/watch?v=XDGF3VS-Ckw)
 
 ## Examples of Use
   You can use this application to easily organize your team members, either as a manager or team leader!
